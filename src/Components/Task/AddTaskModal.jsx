@@ -1,14 +1,16 @@
 import { useState } from "react";
 
-const AddTaskModal = ({ handleAddTask, setIsModalOpen }) => {
-  const [addTask, setAddTask] = useState({
-    id: crypto.randomUUID(),
-    title: "",
-    description: "",
-    tags: [],
-    priority: "",
-    isFavorite: false,
-  });
+const AddTaskModal = ({ handleAddTask, setIsModalOpen, editTask }) => {
+  const [addTask, setAddTask] = useState(
+    editTask || {
+      id: crypto.randomUUID(),
+      title: "",
+      description: "",
+      tags: [],
+      priority: "",
+      isFavorite: false,
+    }
+  );
   const handleChange = (event) => {
     event.target.name === "tags"
       ? setAddTask({
@@ -20,9 +22,6 @@ const AddTaskModal = ({ handleAddTask, setIsModalOpen }) => {
           [event.target.name]: event.target.value,
         });
   };
-
-
-  
 
   return (
     <>

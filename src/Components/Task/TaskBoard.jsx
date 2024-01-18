@@ -28,16 +28,29 @@ const TaskBoard = () => {
   ]);
   // use state for Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // state fo Editing a task
+  const [editTask, setEditTask] = useState(null);
 
   const handleAddTask = (newTask) => {
     setTasks([...tasks, newTask]);
     setIsModalOpen((prev) => !prev);
   };
 
+  const handleEditTask = (taskEditable) => {
+    // console.log(taskEditable);
+    setEditTask(taskEditable);
+    setIsModalOpen((prev) => !prev);
+  };
+
   return (
     <section className="mb-20" id="tasks">
       {isModalOpen && (
-        <AddTaskModal handleAddTask={handleAddTask} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        <AddTaskModal
+          editTask={editTask}
+          handleAddTask={handleAddTask}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
       )}
       <div className="container">
         {/* Search Box */}
@@ -47,7 +60,7 @@ const TaskBoard = () => {
         {/* Search Box Ends */}
         <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
           <TaskAction handleAddTask={() => setIsModalOpen((prev) => !prev)} />
-          <TaskLilts tasks={tasks} />
+          <TaskLilts handleEditTask={handleEditTask} tasks={tasks} />
         </div>
       </div>
     </section>
