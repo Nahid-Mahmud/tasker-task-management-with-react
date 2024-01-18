@@ -2,6 +2,7 @@ import { useState } from "react";
 import Search from "./Search";
 import TaskAction from "./TaskAction";
 import TaskLilts from "./TaskLilts";
+import AddTaskModal from "./AddTaskModal";
 
 const TaskBoard = () => {
   // Default Task
@@ -14,6 +15,7 @@ const TaskBoard = () => {
   //   isFavorite: true,
   // };
 
+  // use State for Tasks
   const [tasks, setTasks] = useState([
     {
       id: crypto.randomUUID(),
@@ -24,9 +26,16 @@ const TaskBoard = () => {
       isFavorite: true,
     },
   ]);
+  // use state for Modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleAddTask = (newTask) => {
+    console.log(newTask);
+  };
 
   return (
     <section className="mb-20" id="tasks">
+      {isModalOpen && <AddTaskModal handleAddTask={handleAddTask} />}
       <div className="container">
         {/* Search Box */}
         <div className="p-2 flex justify-end">
@@ -34,7 +43,7 @@ const TaskBoard = () => {
         </div>
         {/* Search Box Ends */}
         <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
-          <TaskAction />
+          <TaskAction handleAddTask={() => setIsModalOpen((prev) => !prev)} />
           <TaskLilts tasks={tasks} />
         </div>
       </div>
