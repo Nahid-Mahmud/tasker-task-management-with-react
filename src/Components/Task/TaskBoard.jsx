@@ -30,12 +30,15 @@ const TaskBoard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleAddTask = (newTask) => {
-    console.log(newTask);
+    setTasks([...tasks, newTask]);
+    setIsModalOpen((prev) => !prev);
   };
 
   return (
     <section className="mb-20" id="tasks">
-      {isModalOpen && <AddTaskModal handleAddTask={handleAddTask} />}
+      {isModalOpen && (
+        <AddTaskModal handleAddTask={handleAddTask} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      )}
       <div className="container">
         {/* Search Box */}
         <div className="p-2 flex justify-end">
