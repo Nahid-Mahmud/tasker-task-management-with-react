@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { FaStar } from "react-icons/fa";
 
-const TaskLilts = ({ tasks, handleEditTask, }) => {
+const TaskLilts = ({ tasks, handleEditTask, handleDelete }) => {
   // console.log(tasks);
   return (
     <div className="overflow-auto">
@@ -48,7 +48,9 @@ const TaskLilts = ({ tasks, handleEditTask, }) => {
                 <td className="text-center">{priority}</td>
                 <td>
                   <div className="flex items-center justify-center space-x-3">
-                    <button className="text-red-500">Delete</button>
+                    <button onClick={() => handleDelete(task?.id)} className="text-red-500">
+                      Delete
+                    </button>
                     <button onClick={() => handleEditTask(task)} className="text-blue-500">
                       Edit
                     </button>

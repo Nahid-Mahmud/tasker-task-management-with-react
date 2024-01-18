@@ -31,8 +31,20 @@ const TaskBoard = () => {
   // state fo Editing a task
   const [editTask, setEditTask] = useState(null);
 
-  const handleAddTask = (newTask) => {
-    setTasks([...tasks, newTask]);
+  const handleAddTask = (newTask, isAdd) => {
+    if (isAdd) {
+      setTasks([...tasks, newTask]);
+    } else {
+      setTasks(
+        tasks?.map((task) => {
+          if (task?.id === newTask?.id) {
+            return newTask;
+          }
+          return task;
+        })
+      );
+    }
+
     setIsModalOpen((prev) => !prev);
   };
 
@@ -40,6 +52,12 @@ const TaskBoard = () => {
     // console.log(taskEditable);
     setEditTask(taskEditable);
     setIsModalOpen((prev) => !prev);
+  };
+  // delete function
+  const handleDelete = (id) => {
+    // console.log(id);
+
+    setTasks(tasks?.filter((task) => task?.id !== id));
   };
 
   return (
@@ -50,6 +68,7 @@ const TaskBoard = () => {
           handleAddTask={handleAddTask}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
+          setEditTask={setEditTask}
         />
       )}
       <div className="container">
@@ -60,7 +79,7 @@ const TaskBoard = () => {
         {/* Search Box Ends */}
         <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
           <TaskAction handleAddTask={() => setIsModalOpen((prev) => !prev)} />
-          <TaskLilts handleEditTask={handleEditTask} tasks={tasks} />
+          <TaskLilts handleDelete={handleDelete} handleEditTask={handleEditTask} tasks={tasks} />
         </div>
       </div>
     </section>

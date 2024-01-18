@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const AddTaskModal = ({ handleAddTask, setIsModalOpen, editTask }) => {
+const AddTaskModal = ({ handleAddTask, setIsModalOpen, editTask, setEditTask }) => {
   const [addTask, setAddTask] = useState(
     editTask || {
       id: crypto.randomUUID(),
@@ -11,6 +11,10 @@ const AddTaskModal = ({ handleAddTask, setIsModalOpen, editTask }) => {
       isFavorite: false,
     }
   );
+
+  // state for determine whether we are adding or editing a task
+  const [isAdd, setIsAdd] = useState(Object.is(editTask, null));
+
   const handleChange = (event) => {
     event.target.name === "tags"
       ? setAddTask({
@@ -29,12 +33,12 @@ const AddTaskModal = ({ handleAddTask, setIsModalOpen, editTask }) => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          handleAddTask(addTask);
+          handleAddTask(addTask, isAdd);
         }}
         className="mx-auto my-10 w-full max-w-[740px] rounded-xl border border-[#FEFBFB]/[36%] bg-[#191D26] p-9 max-md:px-4 lg:my-20 lg:p-11 z-10 absolute top-1/4 left-1/3"
       >
         <h2 className="mb-9 text-center text-2xl font-bold text-white lg:mb-11 lg:text-[28px]">
-          {/* {isAdd ? "Add New Task" : "Edit Task"} */}
+          {isAdd ? "Add New Task" : "Edit Task"}
         </h2>
 
         <div className="space-y-9 text-white lg:space-y-10">
@@ -100,7 +104,10 @@ const AddTaskModal = ({ handleAddTask, setIsModalOpen, editTask }) => {
         <div className="mt-16 flex justify-between lg:mt-20">
           <button
             type="button"
-            onClick={() => setIsModalOpen((prev) => !prev)}
+            onClick={() => {
+              setIsModalOpen((prev) => !prev);
+              setEditTask(null);
+            }}
             className="rounded bg-red-600 px-4 py-2 text-white transition-all hover:opacity-80"
           >
             Close
