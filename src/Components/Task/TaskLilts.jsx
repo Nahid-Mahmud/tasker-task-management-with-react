@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { FaStar } from "react-icons/fa";
 
-const TaskLilts = ({ tasks, handleEditTask, handleDelete }) => {
+const TaskLilts = ({ tasks, handleEditTask, handleDelete, handlefabourate }) => {
   // console.log(tasks);
   return (
     <div className="overflow-auto">
@@ -22,11 +22,13 @@ const TaskLilts = ({ tasks, handleEditTask, handleDelete }) => {
             return (
               <tr key={id} className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2">
                 <td>
-                  {isFavorite ? (
-                    <FaStar className="text-yellow-500 text-xl" />
-                  ) : (
-                    <FaStar className="text-white text-xl" />
-                  )}
+                  <button onClick={() => handlefabourate(task)}>
+                    {isFavorite ? (
+                      <FaStar className="text-yellow-500 text-xl" />
+                    ) : (
+                      <FaStar className="text-white text-xl" />
+                    )}
+                  </button>
                 </td>
                 <td>{title}</td>
                 <td>
